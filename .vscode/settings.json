@@ -5,6 +5,7 @@
     "ux_device_descriptors.h": "c",
     "ux_device_msc.h": "c",
     "usb_otg.h": "c",
-    "app_azure_rtos.h": "c"
+    "app_azure_rtos.h": "c",
+    "compare": "c"
   }
 }

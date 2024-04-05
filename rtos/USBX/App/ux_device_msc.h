@@ -1,4 +1,3 @@
-/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    ux_device_msc.h
@@ -16,7 +15,6 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __UX_DEVICE_MSC_H__
 #define __UX_DEVICE_MSC_H__
@@ -32,7 +30,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "main.h"
-#include "sdmmc.h"
+//#include "qspi.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
