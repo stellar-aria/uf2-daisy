@@ -19,49 +19,37 @@
 
 #include "app_threadx.h"
 #include "gpio.h"
-// #include "qspi.h"
+#include "qspi.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-//HAL_SD_CardInfoTypeDef USBD_SD_CardInfo;
-
-/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MPU_Config(void);
-
-/* Private user code ---------------------------------------------------------*/
 
 /**
  * @brief  The application entry point.
  * @retval int
  */
 int main(void) {
-  UINT status;
 
-  /* MPU Configuration*/
+  // MPU Configuration
   MPU_Config();
 
-  /* Enable I-Cache*/
+  // Enable I-Cache
   SCB_EnableICache();
 
-  /* Enable D-Cache*/
+  // Enable D-Cache
   SCB_EnableDCache();
 
   /* MCU Configuration*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick.
-   */
+  // Reset of all peripherals, Initializes the Flash interface and the Systick.
   HAL_Init();
 
-  /* Configure the system clock */
+  // Configure the system clock
   SystemClock_Config();
 
-  /* Initialize all configured peripherals */
+  // Initialize all configured peripherals
   MX_GPIO_Init();
-  MX_QSPI_Flash_Init();
+  MX_QSPI_Flash_Init(true);
 
   MX_ThreadX_Init();
 
@@ -92,7 +80,6 @@ void SystemClock_Config(void) {
 
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
   uint32_t plln_val = 240;
-  uint32_t flash_latency = FLASH_LATENCY_4;
 
   /** Configure the main internal regulator output voltage */
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
@@ -105,8 +92,7 @@ void SystemClock_Config(void) {
   /** Initializes the RCC Oscillators according to the specified parameters
    * in the RCC_OscInitTypeDef structure.
    */
-  RCC_OscInitStruct.OscillatorType =
-      RCC_OSCILLATORTYPE_HSI48 | RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48 | RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -126,8 +112,7 @@ void SystemClock_Config(void) {
 
   /** Initializes the CPU, AHB and APB buses clocks
    */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK |
-                                RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 |
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 |
                                 RCC_CLOCKTYPE_D3PCLK1 | RCC_CLOCKTYPE_D1PCLK1;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
@@ -228,7 +213,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
  * @retval None
  */
 void Error_Handler(void) {
-  /* User can add his own implementation to report the HAL error return state */
   while (1) {
   }
 }

@@ -1,28 +1,10 @@
 /**
- ******************************************************************************
  * @file    ux_device_msc.c
  * @author  MCD Application Team
  * @brief   USBX Device MSC applicative source file
- ******************************************************************************
- * @attention
- *
- * Copyright (c) 2020-2021 STMicroelectronics.
- * All rights reserved.
- *
- * This software is licensed under terms that can be found in the LICENSE file
- * in the root directory of this software component.
- * If no LICENSE file comes with this software, it is provided AS-IS.
- *
- ******************************************************************************
  */
 
-/* Includes ------------------------------------------------------------------*/
 #include "ux_device_msc.h"
-
-/* Private includes ----------------------------------------------------------*/
-/* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
-/* Private macro -------------------------------------------------------------*/
 
 #define SD_READ_FLAG 0x01
 #define SD_WRITE_FLAG 0x02
@@ -73,8 +55,8 @@ VOID USBD_STORAGE_Deactivate(VOID *storage_instance) {
  *                       callback return value.
  * @retval status
  */
-UINT USBD_STORAGE_Read(VOID *storage_instance, ULONG lun, UCHAR *data_pointer,
-                       ULONG number_blocks, ULONG lba, ULONG *media_status) {
+UINT USBD_STORAGE_Read(VOID *storage_instance, ULONG lun, UCHAR *data_pointer, ULONG number_blocks, ULONG lba,
+                       ULONG *media_status) {
   UINT status = UX_SUCCESS;
 
   UX_PARAMETER_NOT_USED(storage_instance);
@@ -120,8 +102,8 @@ UINT USBD_STORAGE_Read(VOID *storage_instance, ULONG lun, UCHAR *data_pointer,
  *                       callback return value.
  * @retval status
  */
-UINT USBD_STORAGE_Write(VOID *storage_instance, ULONG lun, UCHAR *data_pointer,
-                        ULONG number_blocks, ULONG lba, ULONG *media_status) {
+UINT USBD_STORAGE_Write(VOID *storage_instance, ULONG lun, UCHAR *data_pointer, ULONG number_blocks, ULONG lba,
+                        ULONG *media_status) {
   UINT status = UX_SUCCESS;
 
   UX_PARAMETER_NOT_USED(storage_instance);
@@ -167,8 +149,7 @@ UINT USBD_STORAGE_Write(VOID *storage_instance, ULONG lun, UCHAR *data_pointer,
  *                       callback return value.
  * @retval status
  */
-UINT USBD_STORAGE_Flush(VOID *storage_instance, ULONG lun, ULONG number_blocks,
-                        ULONG lba, ULONG *media_status) {
+UINT USBD_STORAGE_Flush(VOID *storage_instance, ULONG lun, ULONG number_blocks, ULONG lba, ULONG *media_status) {
   UINT status = UX_SUCCESS;
 
   UX_PARAMETER_NOT_USED(storage_instance);
@@ -190,8 +171,7 @@ UINT USBD_STORAGE_Flush(VOID *storage_instance, ULONG lun, ULONG number_blocks,
  *                       callback return value.
  * @retval status
  */
-UINT USBD_STORAGE_Status(VOID *storage_instance, ULONG lun, ULONG media_id,
-                         ULONG *media_status) {
+UINT USBD_STORAGE_Status(VOID *storage_instance, ULONG lun, ULONG media_id, ULONG *media_status) {
   UINT status = UX_SUCCESS;
 
   UX_PARAMETER_NOT_USED(storage_instance);
@@ -213,10 +193,8 @@ UINT USBD_STORAGE_Status(VOID *storage_instance, ULONG lun, ULONG media_id,
  * @param  media_notification_length: length of the response buffer.
  * @retval status
  */
-UINT USBD_STORAGE_Notification(VOID *storage_instance, ULONG lun,
-                               ULONG media_id, ULONG notification_class,
-                               UCHAR **media_notification,
-                               ULONG *media_notification_length) {
+UINT USBD_STORAGE_Notification(VOID *storage_instance, ULONG lun, ULONG media_id, ULONG notification_class,
+                               UCHAR **media_notification, ULONG *media_notification_length) {
   UINT status = UX_SUCCESS;
 
   UX_PARAMETER_NOT_USED(storage_instance);

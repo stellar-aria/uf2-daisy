@@ -100,8 +100,7 @@
 /*                                                                        */
 /**************************************************************************/
 
-#ifndef UX_USER_H
-#define UX_USER_H
+#pragma once
 
 /* USER CODE BEGIN 1 */
 
@@ -158,7 +157,7 @@
 /* Defined, this value is the maximum number of classes in the device stack that can be loaded by
    USBX.  */
 
-#define UX_MAX_SLAVE_CLASS_DRIVER    1
+#define UX_MAX_SLAVE_CLASS_DRIVER 1
 
 /* Defined, this value represents the number of different host controllers available in the system.
    For USB 1.1 support, this value will usually be 1. For USB 2.0 support, this value can be more
@@ -199,7 +198,7 @@
    is 4096 bytes but can be reduced in memory constrained environments. For cd-rom support in the storage
    class, this value cannot be less than 2048.  */
 
-#define UX_SLAVE_REQUEST_DATA_MAX_LENGTH                    512
+#define UX_SLAVE_REQUEST_DATA_MAX_LENGTH 512
 
 /* Defined, this value includes code to handle storage Multi-Media Commands (MMC). E.g., DVD-ROM. */
 
@@ -254,7 +253,8 @@
 
 /* Works when UX_HOST_CLASS_HID_KEYBOARD_EVENTS_KEY_CHANGES_MODE is defined.
 
-   Defined, this value causes ux_host_class_hid_keyboard_key_get to report lock key (CapsLock/NumLock/ScrollLock) changes.
+   Defined, this value causes ux_host_class_hid_keyboard_key_get to report lock key (CapsLock/NumLock/ScrollLock)
+   changes.
  */
 
 /* #define UX_HOST_CLASS_HID_KEYBOARD_EVENTS_KEY_CHANGES_MODE_REPORT_LOCK_KEYS */
@@ -458,7 +458,7 @@
 #define UX_DEVICE_SIDE_ONLY
 
 /* Defined, this value will include the OTG polling thread. OTG can only be active if both host/device are present.
-*/
+ */
 
 #ifndef UX_HOST_SIDE_ONLY
 #ifndef UX_DEVICE_SIDE_ONLY
@@ -490,7 +490,7 @@
 /* #define UX_HOST_CLASS_STORAGE_MAX_TRANSFER_SIZE          (1024 * 1) */
 
 /* Defined, this value represents the size of the log pool.
-*/
+ */
 /* #define UX_DEBUG_LOG_SIZE          (1024 * 16) */
 
 /* Defined, this macro represents the non-blocking function to return time tick.
@@ -540,7 +540,8 @@
 
 /* #define UX_THREAD_PRIORITY_HCD             2 */
 
-/* This value actually defines the time slice that will be used for threads. For example, if defined to 0, the ThreadX target port does not use time slices. */
+/* This value actually defines the time slice that will be used for threads. For example, if defined to 0, the ThreadX
+ * target port does not use time slices. */
 
 /* #define UX_NO_TIME_SLICE                  0 */
 
@@ -565,6 +566,3 @@
 /* USER CODE BEGIN 2 */
 
 /* USER CODE END 2 */
-
-#endif
-

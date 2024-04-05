@@ -36,6 +36,14 @@ target_link_libraries(bootloader PUBLIC
 
 cmake_path(SET LINKER_SCRIPT NORMALIZE ${CMAKE_CURRENT_LIST_DIR}/STM32H750IB_FLASH.ld)
 
+target_compile_options(bootloader
+  PRIVATE
+    -Wall
+    -Werror
+    -Wno-missing-attributes
+    -Wno-attributes
+)
+
 set_target_properties(bootloader PROPERTIES
     C_STANDARD 23
     C_STANDARD_REQUIRED YES

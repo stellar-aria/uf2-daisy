@@ -506,8 +506,5 @@
   #define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* STM32H7xx_HAL_CONF_H */
