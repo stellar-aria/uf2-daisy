@@ -23,8 +23,6 @@ CPMAddPackage("gh:STMicroelectronics/stm32h7xx_hal_driver@1.11.3")
 CPMAddPackage("gh:STMicroelectronics/cmsis_device_h7@1.10.4")
 add_subdirectory(vendor)
 
-#add_subdirectory(rtos)
-
 file(GLOB_RECURSE BOOTLOADER_SOURCES src/*.c src/*.S)
 add_executable(bootloader ${BOOTLOADER_SOURCES})
 target_include_directories(bootloader PUBLIC
