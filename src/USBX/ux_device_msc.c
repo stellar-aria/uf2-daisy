@@ -5,16 +5,19 @@
  */
 
 #include "ux_device_msc.h"
+#include "uf2/uf2.h"
 
-#define SD_READ_FLAG 0x01
+#define SD_READ_FLAG  0x01
 #define SD_WRITE_FLAG 0x02
-#define SD_TIMEOUT 100U
+#define SD_TIMEOUT    100U
 
 /* Private variables ---------------------------------------------------------*/
 extern TX_EVENT_FLAGS_GROUP EventFlag;
+static WriteState _wr_state = {0};
 
-/* Private function prototypes -----------------------------------------------*/
-static int32_t check_sd_status(VOID);
+/* External function prototypes ----------------------------------------------*/
+void read_block(uint32_t block_no, uint8_t *data);
+int write_block(uint32_t block_no, uint8_t *data, WriteState *state);
 
 /* Private user code ---------------------------------------------------------*/
 
@@ -63,28 +66,18 @@ UINT USBD_STORAGE_Read(VOID *storage_instance, ULONG lun, UCHAR *data_pointer, U
   UX_PARAMETER_NOT_USED(lun);
   UX_PARAMETER_NOT_USED(media_status);
 
-  ULONG ReadFlags = 0U;
+  // since we return block size each, offset should always be zero
+  // TU_ASSERT(offset == 0, -1);
 
-  // TODO: QSPI READ
-  // /* Check if the SD card is present */
-  // if (HAL_GPIO_ReadPin(GPIOF, GPIO_PIN_5) == GPIO_PIN_SET) {
-  //   /* Check id SD card is ready */
-  //   if (check_sd_status() != HAL_OK) {
-  //     Error_Handler();
-  //   }
+  uint32_t count = 0;
 
-  //   /* Start the Dma write */
-  //   status = HAL_SD_ReadBlocks_DMA(&hsd1, data_pointer, lba, number_blocks);
-  //   if (status != HAL_OK) {
-  //     Error_Handler();
-  //   }
+  while (count < number_blocks) {
+    read_block(lba, data_pointer);
 
-  //   /* Wait on readflag until SD card is ready to use for new operation */
-  //   if (tx_event_flags_get(&EventFlag, SD_READ_FLAG, TX_OR_CLEAR, &ReadFlags,
-  //                          TX_WAIT_FOREVER) != TX_SUCCESS) {
-  //     Error_Handler();
-  //   }
-  // }
+    lba++;
+    count++;
+    data_pointer += 512;
+  }
 
   return status;
 }
@@ -110,30 +103,18 @@ UINT USBD_STORAGE_Write(VOID *storage_instance, ULONG lun, UCHAR *data_pointer, 
   UX_PARAMETER_NOT_USED(lun);
   UX_PARAMETER_NOT_USED(media_status);
 
-  ULONG WriteFlags = 0U;
+  uint32_t count = 0;
+  while (count < number_blocks) {
+    // Consider non-uf2 block write as successful
+    // only break if write_block is busy with flashing (return 0)
+    if (0 == write_block(lba, data_pointer, &_wr_state)) {
+      break;
+    }
 
-  // TODO: WRITE QSPI
-  // /* Check if the SD card is present */
-  // if (HAL_GPIO_ReadPin(GPIOF, GPIO_PIN_5) == GPIO_PIN_SET) {
-  //   /* Check id SD card is ready */
-  //   if (check_sd_status() != HAL_OK) {
-  //     Error_Handler();
-  //   }
-
-  //   /* Start the Dma write */
-  //   status = HAL_SD_WriteBlocks_DMA(&hsd1, data_pointer, lba, number_blocks);
-
-  //   if (status != HAL_OK) {
-  //     Error_Handler();
-  //   }
-
-  //   /* Wait on writeflag until SD card is ready to use for new operation */
-  //   if (tx_event_flags_get(&EventFlag, SD_WRITE_FLAG, TX_OR_CLEAR,
-  //   &WriteFlags,
-  //                          TX_WAIT_FOREVER) != TX_SUCCESS) {
-  //     Error_Handler();
-  //   }
-  // }
+    lba++;
+    data_pointer += 512;
+    count++;
+  }
 
   return status;
 }

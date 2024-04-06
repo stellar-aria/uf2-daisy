@@ -43,10 +43,13 @@ target_compile_definitions(STM32H7XX_HAL_DRIVER PRIVATE
 )
 
 
-file(GLOB USBX_DCD_STM32_SOURCES usbx_stm32_device_controllers/*.c)
+file(GLOB USBX_DCD_STM32_SOURCES usbx_stm32_device_controllers/src/*.c)
 add_library(USBX_DCD_STM32 STATIC ${USBX_DCD_STM32_SOURCES})
-target_include_directories(USBX_DCD_STM32 PUBLIC usbx_stm32_device_controllers)
+target_include_directories(USBX_DCD_STM32 PUBLIC
+  usbx_stm32_device_controllers/include
+  usbx_stm32_device_controllers/config
+)
 target_link_libraries(USBX_DCD_STM32 PUBLIC
+  STM32H7XX_HAL_DRIVER
   azrtos::usbx
-  USBX_TARGET
 )

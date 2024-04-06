@@ -1,2 +1,6 @@
 BasedOnStyle: LLVM
 ColumnLimit: 120
+AlignConsecutiveMacros: true
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeElse: True

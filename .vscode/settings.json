@@ -8,6 +8,10 @@
     "app_azure_rtos.h": "c",
     "compare": "c",
     "main.h": "c",
-    "stm32h7xx_hal.h": "c"
+    "stm32h7xx_hal.h": "c",
+    "qspi.h": "c",
+    "stdint.h": "c",
+    "stddef.h": "c",
+    "is25lp064a.h": "c"
   }
 }

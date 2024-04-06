@@ -23,15 +23,24 @@ CPMAddPackage("gh:STMicroelectronics/stm32h7xx_hal_driver@1.11.3")
 CPMAddPackage("gh:STMicroelectronics/cmsis_device_h7@1.10.4")
 add_subdirectory(vendor)
 
-add_subdirectory(rtos)
+#add_subdirectory(rtos)
 
 file(GLOB_RECURSE BOOTLOADER_SOURCES src/*.c src/*.S)
 add_executable(bootloader ${BOOTLOADER_SOURCES})
-target_include_directories(bootloader PUBLIC include)
+target_include_directories(bootloader PUBLIC
+  include
+  src
+  src/boards
+  src/boards/seed
+  src/ThreadX
+  src/USBX
+)
 
 target_link_libraries(bootloader PUBLIC
-  USBX_APP
-  THREADX_APP
+USBX_DCD_STM32
+azrtos::threadx
+  # USBX_APP
+  # THREADX_APP
 )
 
 cmake_path(SET LINKER_SCRIPT NORMALIZE ${CMAKE_CURRENT_LIST_DIR}/STM32H750IB_FLASH.ld)
@@ -67,4 +76,12 @@ target_link_options(bootloader PUBLIC
   $<$<CXX_COMPILER_ID:GNU>:LINKER:--print-memory-usage>
 
   $<$<CONFIG:RELEASE>:-flto>
+)
+
+math(EXPR MK_BOOTLOADER_VERSION "(${PROJECT_VERSION_MAJOR} << 16) + (${PROJECT_VERSION_MINOR} << 8) + ${PROJECT_VERSION_PATCH}")
+
+target_compile_definitions(bootloader PUBLIC
+  UF2_VERSION_BASE="${PROJECT_VERSION}"
+  UF2_VERSION="${PROJECT_VERSION}"
+  MK_BOOTLOADER_VERSION=${MK_BOOTLOADER_VERSION}
 )

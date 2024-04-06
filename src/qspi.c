@@ -344,3 +344,73 @@ void QSPI_WritePage(uint32_t address, uint32_t size, uint8_t *buffer) {
   }
   QSPI_AutoPollingMemReady(&hqspi);
 }
+
+void QSPI_Write(uint32_t address, uint32_t size, uint8_t *buffer) {
+  uint32_t NumOfPage = 0, NumOfSingle = 0, Addr = 0, count = 0, temp = 0;
+  uint32_t QSPI_DataNum = 0;
+  uint32_t flash_page_size = IS25LP064A_PAGE_SIZE;
+  address = address & 0x0FFFFFFF;
+  Addr = address % flash_page_size;
+  count = flash_page_size - Addr;
+  NumOfPage = size / flash_page_size;
+  NumOfSingle = size % flash_page_size;
+
+  if (Addr == 0) {        //!< Address is QSPI_PAGESIZE aligned
+    if (NumOfPage == 0) { //!< NumByteToWrite < QSPI_PAGESIZE
+      QSPI_DataNum = size;
+      QSPI_WritePage(address, QSPI_DataNum, buffer);
+    }
+    else { //!< Size > QSPI_PAGESIZE
+      while (NumOfPage--) {
+        QSPI_DataNum = flash_page_size;
+        QSPI_WritePage(address, QSPI_DataNum, buffer);
+        address += flash_page_size;
+        buffer += flash_page_size;
+      }
+
+      QSPI_DataNum = NumOfSingle;
+      if (QSPI_DataNum > 0)
+        QSPI_WritePage(address, QSPI_DataNum, buffer);
+    }
+  }
+  else {                         //!< Address is not QSPI_PAGESIZE aligned
+    if (NumOfPage == 0) {        //!< Size < QSPI_PAGESIZE
+      if (NumOfSingle > count) { //!< (Size + Address) > QSPI_PAGESIZE
+        temp = NumOfSingle - count;
+        QSPI_DataNum = count;
+        QSPI_WritePage(address, QSPI_DataNum, buffer);
+        address += count;
+        buffer += count;
+        QSPI_DataNum = temp;
+        QSPI_WritePage(address, QSPI_DataNum, buffer);
+      }
+      else {
+        QSPI_DataNum = size;
+        QSPI_WritePage(address, QSPI_DataNum, buffer);
+      }
+    }
+    else { /*!< Size > QSPI_PAGESIZE */
+      size -= count;
+      NumOfPage = size / flash_page_size;
+      NumOfSingle = size % flash_page_size;
+      QSPI_DataNum = count;
+      QSPI_WritePage(address, QSPI_DataNum, buffer);
+      address += count;
+      buffer += count;
+
+      while (NumOfPage--) {
+        QSPI_DataNum = flash_page_size;
+        QSPI_WritePage(address, QSPI_DataNum, buffer);
+        address += flash_page_size;
+        buffer += flash_page_size;
+      }
+
+      if (NumOfSingle != 0) {
+        QSPI_DataNum = NumOfSingle;
+        QSPI_WritePage(address, QSPI_DataNum, buffer);
+      }
+    }
+  }
+
+  MX_QSPI_Flash_Init(true);
+}
