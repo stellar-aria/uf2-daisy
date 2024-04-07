@@ -36,16 +36,10 @@ uint8_t UserClassInstance[USBD_MAX_CLASS_INTERFACES] = {
 
 /* The generic device descriptor buffer that will be filled by builder
    Size of the buffer is the maximum possible device FS descriptor size. */
-#if defined(__ICCARM__) /* IAR Compiler */
-#pragma data_alignment = 4
-#endif /* defined ( __ICCARM__ ) */
 __ALIGN_BEGIN static uint8_t DevFrameWorkDesc_FS[USBD_FRAMEWORK_MAX_DESC_SZ] __ALIGN_END = {0};
 
 /* The generic device descriptor buffer that will be filled by builder
    Size of the buffer is the maximum possible device HS descriptor size. */
-#if defined(__ICCARM__) /* IAR Compiler */
-#pragma data_alignment = 4
-#endif /* defined ( __ICCARM__ ) */
 __ALIGN_BEGIN static uint8_t DevFrameWorkDesc_HS[USBD_FRAMEWORK_MAX_DESC_SZ] __ALIGN_END = {0};
 
 static uint8_t *pDevFrameWorkDesc_FS = DevFrameWorkDesc_FS;
@@ -60,19 +54,12 @@ static uint8_t *pDevFrameWorkDesc_HS = DevFrameWorkDesc_HS;
  Byte 2       : Byte containing the index of the descriptor
  Byte 3       : Byte containing the length of the descriptor string
 */
-#if defined(__ICCARM__) /* IAR Compiler */
-#pragma data_alignment = 4
-#endif /* defined ( __ICCARM__ ) */
 __ALIGN_BEGIN UCHAR USBD_string_framework[USBD_STRING_FRAMEWORK_MAX_LENGTH] __ALIGN_END = {0};
 
 /* Multiple languages are supported on the device, to add
    a language besides English, the Unicode language code must
    be appended to the language_id_framework array and the length
    adjusted accordingly. */
-
-#if defined(__ICCARM__) /* IAR Compiler */
-#pragma data_alignment = 4
-#endif /* defined ( __ICCARM__ ) */
 __ALIGN_BEGIN UCHAR USBD_language_id_framework[LANGUAGE_ID_MAX_LENGTH] __ALIGN_END = {0};
 
 /* USER CODE BEGIN PV1 */

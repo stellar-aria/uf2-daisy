@@ -20,6 +20,7 @@
 #include "app_threadx.h"
 #include "gpio.h"
 #include "qspi.h"
+#include "stm32h7xx_hal_rcc_ex.h"
 
 void SystemClock_Config(void);
 static void MPU_Config(void);
@@ -128,7 +129,7 @@ void SystemClock_Config(void) {
 
   /** Initializes the peripherals clock */
 
-  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_QSPI;
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_QSPI | RCC_PERIPHCLK_USB;
 
   PeriphClkInitStruct.PLL2.PLL2N = 12; // Max supported freq of FMC;
   PeriphClkInitStruct.PLL2.PLL2M = 1;
@@ -148,10 +149,14 @@ void SystemClock_Config(void) {
   PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
   PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
   PeriphClkInitStruct.QspiClockSelection = RCC_QSPICLKSOURCE_D1HCLK;
+  PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
 
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
     Error_Handler();
   }
+
+  /** Enable USB Voltage detector */
+  HAL_PWREx_EnableUSBVoltageDetector();
 }
 
 /* MPU Configuration */

@@ -9,17 +9,20 @@
 #include "ux_api.h"
 #include "ux_device_descriptors.h"
 #include "ux_device_msc.h"
+#include "ux_device_dfu_media.h"
 
 #include "usb_otg.h"
 #include "ux_dcd_stm32.h"
 
-#define USBX_DEVICE_MEMORY_STACK_SIZE 5 * 1024
+#define USBX_DEVICE_MEMORY_STACK_SIZE 32 * 1024
 
-#define UX_DEVICE_APP_THREAD_STACK_SIZE 1024
+#define UX_DEVICE_APP_THREAD_STACK_SIZE 2048
 #define UX_DEVICE_APP_THREAD_PRIO 10
 
 UINT MX_USBX_Device_Init(VOID *memory_ptr);
 VOID USBX_APP_Device_Init(VOID);
+
+#define APP_QUEUE_SIZE 1
 
 #ifndef UX_DEVICE_APP_THREAD_NAME
 #define UX_DEVICE_APP_THREAD_NAME "USBX Device App Main Thread"

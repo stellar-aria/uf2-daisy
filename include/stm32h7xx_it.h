@@ -13,4 +13,4 @@ void UsageFault_Handler(void);
 void DebugMon_Handler(void);
 void SDMMC1_IRQHandler(void);
 void TIM6_DAC_IRQHandler(void);
-void OTG_HS_IRQHandler(void);
+void OTG_FS_IRQHandler(void);

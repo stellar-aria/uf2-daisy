@@ -183,6 +183,16 @@ SECTIONS
     . = ALIGN(8);
   } >RAM
 
+  .usbx_data (NOLOAD):
+  {
+    *(.UsbHpcdSection)
+  } >RAM
+
+  .uart_bss (NOLOAD):
+  {
+    *(.UsbxPoolSection)
+  } >RAM
+
   /* Remove information from the compiler libraries */
   /DISCARD/ :
   {

@@ -12,6 +12,23 @@
     "qspi.h": "c",
     "stdint.h": "c",
     "stddef.h": "c",
-    "is25lp064a.h": "c"
-  }
+    "is25lp064a.h": "c",
+    "app_usbx_device.h": "c",
+    "tx_timer.h": "c",
+    "tx_thread.h": "c",
+    "tx_api.h": "c",
+    "ux_api.h": "c"
+  },
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "C_Cpp.autocomplete": "disabled",
+  "C_Cpp.errorSquiggles": "disabled",
+  "clangd.arguments": [
+      "-pretty",
+      "--background-index",
+      "--query-driver=*arm-none-eabi-*",
+  ],
+  "search.exclude": {
+    "**/.git": true,
+    "vendor/svd": true,
+},
 }

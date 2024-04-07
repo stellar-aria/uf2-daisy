@@ -13,7 +13,7 @@ UX_SLAVE_CLASS_DFU *dfu;
 
 extern TX_QUEUE ux_app_MsgQueue;
 extern ux_dfu_downloadInfotypeDef ux_dfu_download;
-extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
+extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
 ULONG dfu_status = 0U;
 ULONG Address_ptr;
@@ -239,7 +239,7 @@ UINT USBD_DFU_CustomRequest(VOID *dfu_instance, UX_SLAVE_TRANSFER *transfer) {
         Leave_DFU_State = LEAVE_DFU_ENABLED;
 
         /* Disconnect the USB device  */
-        HAL_PCD_Stop(&hpcd_USB_OTG_HS);
+        HAL_PCD_Stop(&hpcd_USB_OTG_FS);
 
         /* Disconnect USBX stack driver,  */
         ux_device_stack_disconnect();

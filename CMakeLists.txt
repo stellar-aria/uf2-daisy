@@ -10,6 +10,8 @@ project(uf2-daisy
 
 set(THREADX_ARCH "cortex_m7")
 set(THREADX_TOOLCHAIN "gnu")
+set(TX_USER_FILE ${CMAKE_CURRENT_LIST_DIR}/include/tx_user.h)
+set(UX_USER_FILE ${CMAKE_CURRENT_LIST_DIR}/src/USBX/ux_user.h)
 
 # add dependencies
 include(cmake/CPM.cmake)

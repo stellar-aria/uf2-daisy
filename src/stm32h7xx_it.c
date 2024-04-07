@@ -19,7 +19,7 @@
 #include "stm32h7xx_it.h"
 #include "main.h"
 
-extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
+extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
 extern TIM_HandleTypeDef htim6;
 
 /******************************************************************************/
@@ -86,4 +86,4 @@ void TIM6_DAC_IRQHandler(void) { HAL_TIM_IRQHandler(&htim6); }
 /**
  * @brief This function handles USB On The Go HS global interrupt.
  */
-void OTG_HS_IRQHandler(void) { HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS); }
+void OTG_FS_IRQHandler(void) { HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS); }

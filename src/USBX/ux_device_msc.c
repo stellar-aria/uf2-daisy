@@ -6,10 +6,7 @@
 
 #include "ux_device_msc.h"
 #include "uf2/uf2.h"
-
-#define SD_READ_FLAG  0x01
-#define SD_WRITE_FLAG 0x02
-#define SD_TIMEOUT    100U
+#include "uf2/uf2cfg.h"
 
 /* Private variables ---------------------------------------------------------*/
 extern TX_EVENT_FLAGS_GROUP EventFlag;
@@ -29,6 +26,10 @@ int write_block(uint32_t block_no, uint8_t *data, WriteState *state);
  */
 VOID USBD_STORAGE_Activate(VOID *storage_instance) {
   UX_PARAMETER_NOT_USED(storage_instance);
+
+  while(true) {
+
+  }
 
   return;
 }
@@ -195,10 +196,7 @@ UINT USBD_STORAGE_Notification(VOID *storage_instance, ULONG lun, ULONG media_id
  * @retval last lba
  */
 ULONG USBD_STORAGE_GetMediaLastLba(VOID) {
-  ULONG LastLba = 0U;
-
-  // LastLba = (ULONG)(USBD_SD_CardInfo.BlockNbr - 1);
-
+  ULONG LastLba = 32768 - 1;
   return LastLba;
 }
 
@@ -209,9 +207,6 @@ ULONG USBD_STORAGE_GetMediaLastLba(VOID) {
  * @retval block length.
  */
 ULONG USBD_STORAGE_GetMediaBlocklength(VOID) {
-  ULONG MediaBlockLen = 0U;
-
-  // MediaBlockLen = (ULONG)USBD_SD_CardInfo.BlockSize;
-
+  ULONG MediaBlockLen = 256;
   return MediaBlockLen;
 }
